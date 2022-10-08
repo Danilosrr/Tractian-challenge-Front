@@ -143,6 +143,12 @@ const GlobalStyle = createGlobalStyle`
     ::placeholder {
     color: #ffffff;
   }
+  
+    ::-webkit-scrollbar {
+    display: none;
+  }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 `;
 
 export default GlobalStyle;
