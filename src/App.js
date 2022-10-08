@@ -10,7 +10,7 @@ export default function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route path="/" element={<></>} /> //login component
           <Route path="app" element={<MainApp />}>
             <Route path="/app/home" element={<Overview></Overview>} />
             <Route path="/app/units" element={<></>} />

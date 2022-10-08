@@ -137,7 +137,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Lato', sans-serif;
         /* font-family: 'Oswald', sans-serif; */
         /* font-family: 'Passion One', cursive; */
-        background-color: #FAFAFA;
+        background-color: #F0F0F0;
     }
 
     ::placeholder {

@@ -32,7 +32,6 @@ export function MainApp() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          backgroundColor: 'lightsalmon',
           position: 'fixed',
           top: '45px',
           bottom: 0,

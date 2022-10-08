@@ -1,28 +1,50 @@
-import { Space } from 'antd';
-import Highcharts, { chart } from 'highcharts';
+import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 export function Overview() {
-  const statusData = [{name:'Running', y:16, color:'#5FBF00'}, {name:'Alerting', y:25, color:'#FFD91E'}, {name:'Stopped', y:40, color:'#F63D52'}]
-
-  const chart = {
+  const statusData = [{ name: 'Running', y: 16, color: '#5FBF00' }, { name: 'Alerting', y: 25, color: '#FFD91E' }, { name: 'Stopped', y: 40, color: '#F63D52' }]
+  const chartData = [{ name: 'asset 1', status: 'Running', color: '#5FBF00', y: 1 }, { name: 'asset 2', status: 'Running', color: '#5FBF00', y: 25 }, { name: 'asset 3', status: 'Alerting', color: '#FFD91E', y: 40 }, { name: 'asset 4', status: 'Stopped', color: '#F63D52', y: 40 }]
+  const chartAllData = [{ name: 'asset 1', status: 'Running', color: '#5FBF00', y: 1 }, { name: 'asset 2', status: 'Running', color: '#5FBF00',  y: 25 }, { name: 'asset 3', status: 'Alerting', color: '#FFD91E', y: 40 }, { name: 'asset 4', status: 'Running', color: '#5FBF00',  y: 26 }, { name: 'asset 5', status: 'Running', color: '#5FBF00',  y: 55 }, { name: 'asset 6', status: 'Alerting', color: '#FFD91E', y: 65.9 }]
+  const unitChart = {
     title: {
       text: 'unit'
     },
+    chart: {
+      type: 'column'
+    },
     series: [{
-      data: [1, 25, 40]
+      name: 'Health',
+      data: chartData
     }],
+    xAxis: {
+      type: 'category',
+    },
     yAxis: {
+      title: {
+        text: 'Health'
+      },
+      labels: {
+        format: '{value}%'
+      },
       max: Math.max(100),
       min: Math.min(0)
     },
+    legend: {
+      enabled: false
+    },
+    tooltip: {
+      pointFormat: `<span>health: </span><b>{point.y:.2f}%</b><br/><span>status: </span><b>{point.status}</b><br/>`
+    },
   };
-  const pie = {
+
+  let overallChart = { ...unitChart, title: {text:'All units'} ,series: [{ data: chartAllData }] };
+
+  const statusChart = {
     title: {
       text: 'Assets Status'
     },
     subtitle: {
-      text: statusData.map(i=>i.y).reduce((sum,a)=>sum+a,0),
+      text: statusData.map(i => i.y).reduce((sum, a) => sum + a, 0),
       align: 'center',
       verticalAlign: 'middle',
       style: { fontSize: "18px" }
@@ -31,7 +53,7 @@ export function Overview() {
       type: 'pie',
     },
     series: [{
-      innerSize: '80%',
+      innerSize: '75%',
       name: 'Assets',
       data: statusData
     }],
@@ -58,7 +80,6 @@ export function Overview() {
           justifyContent: 'center',
           padding: '10px',
           gap: '10px',
-          backgroundColor: 'lightskyblue',
           position: 'absolute',
           top: 0,
           width: '50%',
@@ -70,17 +91,16 @@ export function Overview() {
         <HighchartsReact
           containerProps={{ style: { width: "100%", height: '100%' } }}
           highcharts={Highcharts}
-          options={chart}
+          options={unitChart}
         />
         <HighchartsReact
           containerProps={{ style: { width: "100%", height: '100%' } }}
           highcharts={Highcharts}
-          options={chart}
+          options={unitChart}
         />
       </div>
       <div
         style={{
-          backgroundColor: 'lightpink',
           position: 'absolute',
           padding: '10px',
           top: 0,
@@ -92,7 +112,22 @@ export function Overview() {
         <HighchartsReact
           containerProps={{ style: { width: "100%", height: '100%' } }}
           highcharts={Highcharts}
-          options={pie}
+          options={statusChart}
+        />
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          padding: '10px',
+          bottom: 0,
+          width: '100%',
+          height: '50%',
+        }}
+      >
+        <HighchartsReact
+          containerProps={{ style: { width: "100%", height: '100%' } }}
+          highcharts={Highcharts}
+          options={overallChart}
         />
       </div>
     </>
