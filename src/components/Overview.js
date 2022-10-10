@@ -1,27 +1,39 @@
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
-import { getAllAssets } from '../services/assetsApi';
+import { getAllAssets, getUnitAssets } from '../services/assetsApi';
 import { statusColor } from '../services/utils';
 
 export default function Overview() {
   const [allAssetsData, setAllAssetsData] = useState([]);
-  
+  const [unitsAssetsData, setUnitsAssetsData] = useState([]);
+
   useEffect(() => {
-    const getAssets = async () => {
-      const companyId = '633d204450cf920b1b527fe7';
-      const data = await getAllAssets( companyId );
-      const dataFormat = data.map(asset => { return  {...asset, color: statusColor(asset.status)} })
+    const companyId = '633d204450cf920b1b527fe7';
+
+    const allAssets = async () => {
+      const data = await getAllAssets(companyId);
+      const dataFormat = data.map(asset => { return { ...asset, color: statusColor(asset.status) } })
       setAllAssetsData(dataFormat);
-      console.log(data);
     }
-    getAssets();
+
+    const unitAssets = async () => {
+      const data = await getUnitAssets(companyId);
+      data.forEach(unit => {
+        unit.assets.forEach(asset => {
+          asset.color = statusColor(asset.status) 
+        });
+      })
+      setUnitsAssetsData(data);
+    }
+
+    unitAssets();
+    allAssets();
   }, []);
 
   const statusData = [{ name: 'Running', y: 16, color: '#5FBF00' }, { name: 'Alerting', y: 25, color: '#FFD91E' }, { name: 'Stopped', y: 40, color: '#F63D52' }]
-  const chartData = [{ name: 'asset 1', status: 'Running', color: '#5FBF00', y: 1 }, { name: 'asset 2', status: 'Running', color: '#5FBF00', y: 25 }, { name: 'asset 3', status: 'Alerting', color: '#FFD91E', y: 40 }, { name: 'asset 4', status: 'Stopped', color: '#F63D52', y: 40 }]
 
-  const unitChart = {
+  const chartOptions = {
     title: {
       text: 'unit'
     },
@@ -30,7 +42,7 @@ export default function Overview() {
     },
     series: [{
       name: 'Health',
-      data: chartData
+      data: []
     }],
     xAxis: {
       type: 'category',
@@ -52,8 +64,6 @@ export default function Overview() {
       pointFormat: `<span>health: </span><b>{point.y:.2f}%</b><br/><span>status: </span><b>{point.status}</b><br/>`
     },
   };
-
-  let overallChart = { ...unitChart, title: { text: 'All units' }, series: [{ data: allAssetsData }] };
 
   const statusChart = {
     title: {
@@ -105,16 +115,14 @@ export default function Overview() {
           overflowY: 'scroll',
         }}
       >
-        <HighchartsReact
-          containerProps={{ style: { width: "100%", height: '100%' } }}
-          highcharts={Highcharts}
-          options={unitChart}
-        />
-        <HighchartsReact
-          containerProps={{ style: { width: "100%", height: '100%' } }}
-          highcharts={Highcharts}
-          options={unitChart}
-        />
+        {unitsAssetsData.map(units =>
+          <HighchartsReact
+            containerProps={{ style: { width: "100%", height: '100%' } }}
+            highcharts={Highcharts}
+            options={{ ...chartOptions, title: { text: units.name }, series: [{ data: units.assets }] }}
+          />
+        )}
+
       </div>
       <div
         style={{
@@ -144,7 +152,7 @@ export default function Overview() {
         <HighchartsReact
           containerProps={{ style: { width: "100%", height: '100%' } }}
           highcharts={Highcharts}
-          options={overallChart}
+          options={{ ...chartOptions, title: { text: 'All units' }, series: [{ data: allAssetsData }] }}
         />
       </div>
     </>
