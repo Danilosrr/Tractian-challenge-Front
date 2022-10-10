@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from './assets/css/Globalstyle';
-import { Overview } from "./components/Overview";
+import 'antd/dist/antd.css';
+import Overview from "./components/Overview";
 import { MainApp } from "./components/shared/Main";
 
 export default function App() {

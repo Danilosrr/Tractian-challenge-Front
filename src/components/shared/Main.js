@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css';
 import { Menu, Space } from 'antd';
 import { MenuOutlined, FundViewOutlined, BlockOutlined, TableOutlined, TeamOutlined } from '@ant-design/icons';
 import { Outlet } from "react-router-dom";
