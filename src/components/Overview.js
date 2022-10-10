@@ -2,10 +2,11 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
 import { getAllAssets, getUnitAssets } from '../services/assetsApi';
-import { statusColor } from '../services/utils';
+import { groupBy, statusColor } from '../services/utils';
 
 export default function Overview() {
   const [allAssetsData, setAllAssetsData] = useState([]);
+  const [statusData, setStatusData] = useState([]);
   const [unitsAssetsData, setUnitsAssetsData] = useState([]);
 
   useEffect(() => {
@@ -15,8 +16,8 @@ export default function Overview() {
       const data = await getAllAssets(companyId);
       const dataFormat = data.map(asset => { return { ...asset, color: statusColor(asset.status) } })
       setAllAssetsData(dataFormat);
+      setStatusData(groupBy(dataFormat,'status'));
     }
-
     const unitAssets = async () => {
       const data = await getUnitAssets(companyId);
       data.forEach(unit => {
@@ -30,8 +31,6 @@ export default function Overview() {
     unitAssets();
     allAssets();
   }, []);
-
-  const statusData = [{ name: 'Running', y: 16, color: '#5FBF00' }, { name: 'Alerting', y: 25, color: '#FFD91E' }, { name: 'Stopped', y: 40, color: '#F63D52' }]
 
   const chartOptions = {
     title: {
