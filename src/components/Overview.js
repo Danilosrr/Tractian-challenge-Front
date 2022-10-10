@@ -11,9 +11,9 @@ export default function Overview() {
     const getAssets = async () => {
       const companyId = '633d204450cf920b1b527fe7';
       const data = await getAllAssets( companyId );
-      const dataFormat = data.map(asset => { return  {...asset, y: asset.health, color: statusColor(asset.status)} })
+      const dataFormat = data.map(asset => { return  {...asset, color: statusColor(asset.status)} })
       setAllAssetsData(dataFormat);
-      console.log(dataFormat);
+      console.log(data);
     }
     getAssets();
   }, []);
@@ -87,7 +87,7 @@ export default function Overview() {
       pointFormat: '{series.name}: <b>{point.y} </b><p>({point.percentage:.1f}%)</p>'
     }
   }
-  
+
   return (
     <>
       <div
