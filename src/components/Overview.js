@@ -10,25 +10,25 @@ export default function Overview() {
   const [unitsAssetsData, setUnitsAssetsData] = useState([]);
 
   useEffect(() => {
-    const companyId = '633d204450cf920b1b527fe7';
+    const companyId = '633d204450cf920b1b527fe7'; //Obter de um context 
 
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       const dataFormat = data.map(asset => { return { ...asset, color: statusColor(asset.status) } })
       setAllAssetsData(dataFormat);
-      setStatusData(groupBy(dataFormat,'status'));
+      setStatusData(groupBy(dataFormat, 'status'));
     }
-    const unitAssets = async () => {
+    const allUnits = async () => {
       const data = await getUnitAssets(companyId);
       data.forEach(unit => {
         unit.assets.forEach(asset => {
-          asset.color = statusColor(asset.status) 
+          asset.color = statusColor(asset.status)
         });
       })
       setUnitsAssetsData(data);
     }
 
-    unitAssets();
+    allUnits();
     allAssets();
   }, []);
 
@@ -115,11 +115,11 @@ export default function Overview() {
         }}
       >
         {unitsAssetsData.map(units =>
-          <HighchartsReact
-            containerProps={{ style: { width: "100%", height: '100%' } }}
-            highcharts={Highcharts}
-            options={{ ...chartOptions, title: { text: units.name }, series: [{ data: units.assets }] }}
-          />
+            <HighchartsReact
+              containerProps={{ style: { width: "100%", height: '100%' } }}
+              highcharts={Highcharts}
+              options={{ ...chartOptions, title: { text: units.name }, series: [{ data: units.assets }] }}
+            />
         )}
 
       </div>
@@ -156,4 +156,4 @@ export default function Overview() {
       </div>
     </>
   );
-}
+};
