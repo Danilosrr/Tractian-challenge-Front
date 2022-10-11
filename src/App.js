@@ -11,6 +11,7 @@ import Company from "./components/Login/Company";
 import NewAsset from "./components/Assets/Form";
 import NewUnit from "./components/Units/Form";
 import NewUser from "./components/Users/Form";
+import NewCompany from "./components/Login/Form";
 
 export default function App() {
 
@@ -20,7 +21,8 @@ export default function App() {
       <CompanyProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Company></Company>} /> 
+            <Route path="/" element={<Company></Company>} />
+            <Route path="/new" element={<NewCompany></NewCompany>} />
             <Route path="app" element={<MainApp />}>
               <Route path="/app/home" element={<Overview></Overview>} />
               <Route path="/app/units" element={<Units></Units>} />

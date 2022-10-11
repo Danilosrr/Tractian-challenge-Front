@@ -25,6 +25,7 @@ export default function Company() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'column',
         position: 'fixed',
         top: 0,
         bottom: 0,
@@ -33,9 +34,15 @@ export default function Company() {
         flexWrap: 'wrap',
       }}
     >
+      <Button
+        type='dashed'
+        onClick={() => { navigate('/new') }}
+      >
+        Add new company
+      </Button>
       {companies.map(company => {
         return (
-          <Button key={company.id} onClick={()=>{setCompanyData(company.id); navigate('app/home')}}>
+          <Button key={company.id} onClick={() => { setCompanyData(company.id); navigate('app/home') }}>
             {company.name}
           </Button>
         )
