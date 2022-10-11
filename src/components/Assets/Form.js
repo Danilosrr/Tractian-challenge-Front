@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Slider, Form, Input, Radio, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useCompany from '../../hooks/useCompany';
-import { getUnitAssets } from '../../services/assetsApi';
+import { getUnitAssets, postNewAsset } from '../../services/assetsApi';
 
 
 export default function NewAsset() {
@@ -26,9 +26,13 @@ export default function NewAsset() {
   }, []);
 
   function onFinish() {
-    const data = form.getFieldsValue();
-
-    console.log('submit', data)
+    try {
+      const data = form.getFieldsValue();
+      //const request = postNewAsset({...data,companyId});
+      console.log('submited: ', {...data,companyId})
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
