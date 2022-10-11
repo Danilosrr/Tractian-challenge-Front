@@ -110,7 +110,7 @@ export default function NewAsset() {
       >
         <Radio.Group>
           <Radio.Button value="Running">Running</Radio.Button>
-          <Radio.Button value="Allerting">Allerting</Radio.Button>
+          <Radio.Button value="Alerting">Alerting</Radio.Button>
           <Radio.Button value="Stopped">Stopped</Radio.Button>
         </Radio.Group>
       </Form.Item>
