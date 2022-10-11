@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Avatar, List, Tooltip } from 'antd';
-import { WhatsAppOutlined, MailOutlined } from '@ant-design/icons';
+import { Avatar, Button, List, Tooltip } from 'antd';
+import { WhatsAppOutlined, MailOutlined, PlusOutlined } from '@ant-design/icons';
 import { getAllUsers } from '../../services/usersApi';
+import useCompany from '../../hooks/useCompany';
 
 export default function Users() {
   const [usersData, setUserData] = useState([]);
-  const companyId = '634520bc05727a7eb274cf43'; //Obter de um context 
+  const companyId = useCompany();
 
   useEffect(() => {
     const allUsers = async () => {
@@ -27,16 +28,26 @@ export default function Users() {
     backgroundColor: 'transparent',
     width: 'calc(100vw - 20px)',
   };
-
+  const listItem = {
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#FFFFFF', 
+    width: 'calc(100vw - 20px)' 
+  };
+  
   return (
     <>
       <List
         style={{ ...usersContainer }}
         itemLayout="horizontal"
       >
+        <Button style={{...listItem, flexDirection:'column', height:'100%', marginBottom:'10px'}} type='dashed' icon={<PlusOutlined style={{ fontSize: '40px' }}/>}>
+          Add new user
+        </Button>
         {usersData.map(user => {
           return (
-            <List.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFFFFF', width: 'calc(100vw - 20px)' }}>
+            <List.Item style={listItem} >
               <>
                 <List.Item.Meta
                   style={{ padding: '0 10px' }}

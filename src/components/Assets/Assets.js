@@ -3,13 +3,14 @@ import { Button, Badge, Descriptions, Space, Image, Progress } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { getAllAssets } from "../../services/assetsApi";
 import { statusColor } from "../../services/utils";
+import useCompany from "../../hooks/useCompany";
 
 export default function Assets() {
   const [allAssetsData, setAllAssetsData] = useState([]);
 
-  useEffect(() => {
-    const companyId = '634520bc05727a7eb274cf43'; //Obter de um context 
+  const companyId = useCompany();
 
+  useEffect(() => {
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       setAllAssetsData(data);
@@ -37,8 +38,8 @@ export default function Assets() {
       <Space style={{ ...unitContainer, justifyContent: 'flex-start', bottom: 0, overflowX: 'scroll', overflowY: 'hidden' }}>
         {allAssetsData.map(asset => {
           return (
-            <Space style={{ backgroundColor: '#FFFFFF', padding: '10px' }}>
-              <Image width={100} src="https://aprender.buzzero.com/buzzers/wilson-schwebel/41350/HotSiteImage.jpg" />
+            <Space key={asset.name} style={{ backgroundColor: '#FFFFFF', padding: '10px' }}>
+              <Image width={100} src={asset.image} />
               <Descriptions title={asset.name} style={{ height: '100%', width: 'max-content' }} size='small' bordered>
                 <Descriptions.Item span={3}>{<Badge color={statusColor(asset.status)} text={asset.status} />}</Descriptions.Item>
                 

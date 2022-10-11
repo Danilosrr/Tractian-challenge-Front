@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
+import useCompany from '../hooks/useCompany';
 import { getAllAssets, getUnitAssets } from '../services/assetsApi';
 import { groupBy, statusColor } from '../services/utils';
 
@@ -8,10 +9,10 @@ export default function Overview() {
   const [allAssetsData, setAllAssetsData] = useState([]);
   const [statusData, setStatusData] = useState([]);
   const [unitsAssetsData, setUnitsAssetsData] = useState([]);
+  
+  const companyId = useCompany();
 
   useEffect(() => {
-    const companyId = '633d204450cf920b1b527fe7'; //Obter de um context 
-
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       const dataFormat = data.map(asset => { return { ...asset, color: statusColor(asset.status) } })
@@ -116,6 +117,7 @@ export default function Overview() {
       >
         {unitsAssetsData.map(units =>
             <HighchartsReact
+              key={units.name}
               containerProps={{ style: { width: "100%", height: '100%' } }}
               highcharts={Highcharts}
               options={{ ...chartOptions, title: { text: units.name }, series: [{ data: units.assets }] }}

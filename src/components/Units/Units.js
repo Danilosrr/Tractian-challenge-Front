@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button, Badge, Descriptions, Table } from 'antd';
+import { Button, Badge, Descriptions, Table, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { getUnitAssets } from "../../services/assetsApi";
 import { groupBy, statusColor } from "../../services/utils";
+import useCompany from "../../hooks/useCompany";
 
 export default function Units() {
   const [unitsOverallData, setUnitsOverallData] = useState([]);
 
-  useEffect(() => {
-    const companyId = '634520bc05727a7eb274cf43'; //Obter de um context 
+  const companyId = useCompany();
 
+  useEffect(() => {
     const allUnits = async () => {
       const data = await getUnitAssets(companyId);
       data.forEach(unit => {
@@ -79,15 +80,15 @@ export default function Units() {
       {unitsOverallData.map(unit => {
         const group = groupBy(unit.assets, 'status');
         return (
-          <Descriptions title={unit.name} style={{ ...unitContainer, padding: '10px', height: 'min-content' }}>
-            <Descriptions.Item label="Company" span={3}>Zhou Maomao</Descriptions.Item>
+          <Descriptions key={unit.name} title={unit.name} style={{ ...unitContainer, padding: '10px', height: 'min-content' }}>
             {group.map(status => {
               return (
-                <Descriptions.Item label={status.name}>{status.y}</Descriptions.Item>
+                <Descriptions.Item key={unit.name+status.name} label={status.name}>{status.y}</Descriptions.Item>
               )
             })}
-            <Descriptions.Item>
-              <Table columns={columns} dataSource={unit.assets} style={{ width: '100%'}} pagination={false}/>
+            <Descriptions.Item key={unit.name+unit.assets[0].company} label="Company" span={3}>{unit.assets[0].company}</Descriptions.Item>
+            <Descriptions.Item key={unit.name+'tableDiv'} span={3}>
+              <Table key={unit.name+'table'} columns={columns} dataSource={unit.assets} style={{ width: '100%' }} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
         )
