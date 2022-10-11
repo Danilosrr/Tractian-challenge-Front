@@ -24,10 +24,10 @@ export default function NewAsset() {
     allUnits();
   }, []);
 
-  function onFinish() {
+  async function onFinish() {
     try {
       const data = form.getFieldsValue();
-      const request = postNewAsset(data,companyId);
+      const request = await postNewAsset(data,companyId);
       message.success('New asset registered');
     } catch (error) {
       message.error('Asset not registered');

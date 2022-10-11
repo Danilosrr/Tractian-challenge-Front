@@ -9,6 +9,7 @@ import Users from "./components/Users/Users";
 import { CompanyProvider } from "./context/companyContext";
 import Company from "./components/Login/Company";
 import NewAsset from "./components/Assets/Form";
+import NewUnit from "./components/Units/Form";
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="app" element={<MainApp />}>
               <Route path="/app/home" element={<Overview></Overview>} />
               <Route path="/app/units" element={<Units></Units>} />
+              <Route path="/app/units/new" element={<NewUnit></NewUnit>} />
               <Route path="/app/assets" element={<Assets></Assets>} />
               <Route path="/app/assets/new" element={<NewAsset></NewAsset>} />
               <Route path="/app/users" element={<Users></Users>} />

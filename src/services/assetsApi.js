@@ -14,3 +14,8 @@ export async function getUnitAssets(companyId) {
     const response = await api.get(`/units/${companyId}`);
     return response.data;
 }
+
+export async function postNewUnit(data, companyId) {
+    const response = await api.post(`/units/${companyId}`, data);
+    return response.data;
+}

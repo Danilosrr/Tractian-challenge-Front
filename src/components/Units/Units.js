@@ -8,12 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Units() {
   const [unitsOverallData, setUnitsOverallData] = useState([]);
-  
-  const navigate =useNavigate();
+
+  const navigate = useNavigate();
   const companyId = useCompany();
-  
+
   useEffect(() => {
-    if (!companyId){ navigate('/')};
+    if (!companyId) { navigate('/') };
 
     const allUnits = async () => {
       const data = await getUnitAssets(companyId);
@@ -77,7 +77,13 @@ export default function Units() {
         overflowY: 'scroll'
       }}
     >
-      <Button type="dashed" icon={<PlusOutlined style={{ fontSize: '40px' }} />} size={'large'} style={{ ...unitContainer, backgroundColor: 'transparent' }}>
+      <Button
+        style={{ ...unitContainer, backgroundColor: 'transparent' }}
+        type="dashed"
+        icon={<PlusOutlined style={{ fontSize: '40px' }} />}
+        size={'large'}
+        onClick={() => { navigate('new/') }}
+      >
         Add new unit
       </Button>
 
@@ -87,12 +93,12 @@ export default function Units() {
           <Descriptions key={unit.name} title={unit.name} style={{ ...unitContainer, padding: '10px', height: 'min-content' }}>
             {group.map(status => {
               return (
-                <Descriptions.Item key={unit.name+status.name} label={status.name}>{status.y}</Descriptions.Item>
+                <Descriptions.Item key={unit.name + status.name} label={status.name}>{status.y}</Descriptions.Item>
               )
             })}
-            <Descriptions.Item key={unit.name+unit.assets[0].company} label="Company" span={3}>{unit.assets[0].company}</Descriptions.Item>
-            <Descriptions.Item key={unit.name+'tableDiv'} span={3}>
-              <Table key={unit.name+'table'} columns={columns} dataSource={unit.assets} style={{ width: '100%' }} pagination={false} />
+            <Descriptions.Item key={unit.name + unit.assets[0].company} label="Company" span={3}>{unit.assets[0].company}</Descriptions.Item>
+            <Descriptions.Item key={unit.name + 'tableDiv'} span={3}>
+              <Table key={unit.name + 'table'} columns={columns} dataSource={unit.assets} style={{ width: '100%' }} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
         )
