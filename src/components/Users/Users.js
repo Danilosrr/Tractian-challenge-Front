@@ -3,9 +3,11 @@ import { Avatar, Button, List, Tooltip } from 'antd';
 import { WhatsAppOutlined, MailOutlined, PlusOutlined } from '@ant-design/icons';
 import { getAllUsers } from '../../services/usersApi';
 import useCompany from '../../hooks/useCompany';
+import { useNavigate } from 'react-router-dom';
 
 export default function Users() {
   const [usersData, setUserData] = useState([]);
+  const navigate = useNavigate();
   const companyId = useCompany();
 
   useEffect(() => {
@@ -29,20 +31,25 @@ export default function Users() {
     width: 'calc(100vw - 20px)',
   };
   const listItem = {
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: '#FFFFFF', 
-    width: 'calc(100vw - 20px)' 
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    width: 'calc(100vw - 20px)'
   };
-  
+
   return (
     <>
       <List
         style={{ ...usersContainer }}
         itemLayout="horizontal"
       >
-        <Button style={{...listItem, flexDirection:'column', height:'100%', marginBottom:'10px'}} type='dashed' icon={<PlusOutlined style={{ fontSize: '40px' }}/>}>
+        <Button
+          style={{ ...listItem, flexDirection: 'column', height: '100%', marginBottom: '10px' }}
+          type='dashed'
+          icon={<PlusOutlined style={{ fontSize: '40px' }} />}
+          onClick={() => { navigate('new/') }}
+        >
           Add new user
         </Button>
         {usersData.map(user => {

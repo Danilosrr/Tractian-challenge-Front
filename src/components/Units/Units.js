@@ -96,8 +96,8 @@ export default function Units() {
                 <Descriptions.Item key={unit.name + status.name} label={status.name}>{status.y}</Descriptions.Item>
               )
             })}
-            <Descriptions.Item key={unit.name + unit.assets[0].company} label="Company" span={3}>{unit.assets[0].company}</Descriptions.Item>
-            <Descriptions.Item key={unit.name + 'tableDiv'} span={3}>
+            <Descriptions.Item label="Company" span={3}>{unit.name}</Descriptions.Item>
+            <Descriptions.Item span={3}>
               <Table key={unit.name + 'table'} columns={columns} dataSource={unit.assets} style={{ width: '100%' }} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
