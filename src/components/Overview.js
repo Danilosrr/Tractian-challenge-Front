@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useCompany from '../hooks/useCompany';
 import { getAllAssets, getUnitAssets } from '../services/assetsApi';
 import { groupBy, statusColor } from '../services/utils';
@@ -10,9 +11,12 @@ export default function Overview() {
   const [statusData, setStatusData] = useState([]);
   const [unitsAssetsData, setUnitsAssetsData] = useState([]);
   
+  const navigate =useNavigate();
   const companyId = useCompany();
-
+  
   useEffect(() => {
+    if (!companyId){ navigate('/')};
+    
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       const dataFormat = data.map(asset => { return { ...asset, color: statusColor(asset.status) } })

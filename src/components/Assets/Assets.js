@@ -4,13 +4,17 @@ import { PlusOutlined } from '@ant-design/icons';
 import { getAllAssets } from "../../services/assetsApi";
 import { statusColor } from "../../services/utils";
 import useCompany from "../../hooks/useCompany";
+import { useNavigate } from "react-router-dom";
 
 export default function Assets() {
   const [allAssetsData, setAllAssetsData] = useState([]);
 
+  const navigate =useNavigate();
   const companyId = useCompany();
-
+  
   useEffect(() => {
+    if (!companyId){ navigate('/')};
+
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       setAllAssetsData(data);

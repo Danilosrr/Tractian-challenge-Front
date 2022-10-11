@@ -4,13 +4,17 @@ import { PlusOutlined } from '@ant-design/icons';
 import { getUnitAssets } from "../../services/assetsApi";
 import { groupBy, statusColor } from "../../services/utils";
 import useCompany from "../../hooks/useCompany";
+import { useNavigate } from "react-router-dom";
 
 export default function Units() {
   const [unitsOverallData, setUnitsOverallData] = useState([]);
-
+  
+  const navigate =useNavigate();
   const companyId = useCompany();
-
+  
   useEffect(() => {
+    if (!companyId){ navigate('/')};
+
     const allUnits = async () => {
       const data = await getUnitAssets(companyId);
       data.forEach(unit => {
@@ -19,7 +23,7 @@ export default function Units() {
         });
       })
       setUnitsOverallData(data);
-    }
+    };
 
     allUnits();
   }, []);
