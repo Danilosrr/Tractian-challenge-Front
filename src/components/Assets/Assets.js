@@ -13,7 +13,6 @@ export default function Assets() {
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
       setAllAssetsData(data);
-      console.log(data)
     }
 
     allAssets();
@@ -26,17 +25,16 @@ export default function Assets() {
     padding: '10px',
     position: 'absolute',
     backgroundColor: 'transparent',
-    top: 0,
     width: '100%',
     height: '50%',
   };
 
   return (
     <>
-      <Button style={{ ...unitContainer, flexDirection: 'column' }} icon={<PlusOutlined style={{ fontSize: '40px' }} />} type='dashed'>
+      <Button style={{ ...unitContainer, top: 0, flexDirection: 'column' }} icon={<PlusOutlined style={{ fontSize: '40px' }} />} type='dashed'>
         Add new asset
       </Button>
-      <Space style={{ ...unitContainer, justifyContent: 'flex-start', top: '50%', overflowY: 'scroll' }}>
+      <Space style={{ ...unitContainer, justifyContent: 'flex-start', bottom: 0, overflowX: 'scroll', overflowY: 'hidden' }}>
         {allAssetsData.map(asset => {
           return (
             <Space style={{ backgroundColor: '#FFFFFF', padding: '10px' }}>
