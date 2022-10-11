@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getUnitAssets } from "../services/assetsApi";
 import { Button, Badge, Descriptions, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { groupBy, statusColor } from "../services/utils";
+import { getUnitAssets } from "../../services/assetsApi";
+import { groupBy, statusColor } from "../../services/utils";
 
 export default function Units() {
   const [unitsOverallData, setUnitsOverallData] = useState([]);
