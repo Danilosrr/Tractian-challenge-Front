@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Slider, Form, Input, Radio, Select } from 'antd';
+import { Button, Slider, Form, Input, Radio, Select, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useCompany from '../../hooks/useCompany';
 import { getUnitAssets, postNewAsset } from '../../services/assetsApi';
@@ -19,7 +19,6 @@ export default function NewAsset() {
       const response = await getUnitAssets(companyId);
       const data = response.map(unit => { return { name: unit.name } });
       setUnits(data);
-      console.log(data);
     };
 
     allUnits();
@@ -29,8 +28,9 @@ export default function NewAsset() {
     try {
       const data = form.getFieldsValue();
       const request = postNewAsset(data,companyId);
-      console.log('submited: ', data, companyId)
+      message.success('New asset registered');
     } catch (error) {
+      message.error('Asset not registered');
       console.log(error);
     }
   }
