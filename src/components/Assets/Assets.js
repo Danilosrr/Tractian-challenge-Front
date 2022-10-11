@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 export default function Assets() {
   const [allAssetsData, setAllAssetsData] = useState([]);
 
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const companyId = useCompany();
-  
+
   useEffect(() => {
-    if (!companyId){ navigate('/')};
+    if (!companyId) { navigate('/') };
 
     const allAssets = async () => {
       const data = await getAllAssets(companyId);
@@ -36,9 +36,14 @@ export default function Assets() {
 
   return (
     <>
-      <Button style={{ ...unitContainer, top: 0, flexDirection: 'column' }} icon={<PlusOutlined style={{ fontSize: '40px' }} />} type='dashed'>
-        Add new asset
-      </Button>
+        <Button
+          style={{ ...unitContainer, top: 0, flexDirection: 'column' }}
+          icon={<PlusOutlined style={{ fontSize: '40px' }} />}
+          type='dashed'
+          onClick={()=>{navigate('new/')}}
+        >
+          Add new asset
+        </Button>
       <Space style={{ ...unitContainer, justifyContent: 'flex-start', bottom: 0, overflowX: 'scroll', overflowY: 'hidden' }}>
         {allAssetsData.map(asset => {
           return (
@@ -46,9 +51,9 @@ export default function Assets() {
               <Image width={100} src={asset.image} />
               <Descriptions title={asset.name} style={{ height: '100%', width: 'max-content' }} size='small' bordered>
                 <Descriptions.Item span={3}>{<Badge color={statusColor(asset.status)} text={asset.status} />}</Descriptions.Item>
-                
+
                 <Descriptions.Item label='health' span={3}>
-                  <Progress size="small" percent={asset.y} status="active"/>
+                  <Progress size="small" percent={asset.y} status="active" />
                 </Descriptions.Item>
 
                 <Descriptions.Item label='Unit' span={1}>{asset.unit}</Descriptions.Item>
