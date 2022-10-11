@@ -28,8 +28,8 @@ export default function NewAsset() {
   function onFinish() {
     try {
       const data = form.getFieldsValue();
-      //const request = postNewAsset({...data,companyId});
-      console.log('submited: ', {...data,companyId})
+      const request = postNewAsset(data,companyId);
+      console.log('submited: ', data, companyId)
     } catch (error) {
       console.log(error);
     }

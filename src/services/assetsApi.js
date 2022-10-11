@@ -5,8 +5,8 @@ export async function getAllAssets(companyId) {
     return response.data;
 }
 
-export async function postNewAsset(companyId) {
-    const response = await api.post(`/assets/${companyId}`);
+export async function postNewAsset(data, companyId) {
+    const response = await api.post(`/assets/${companyId}`, data);
     return response.data;
 }
 
