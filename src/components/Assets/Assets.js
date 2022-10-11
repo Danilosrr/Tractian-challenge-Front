@@ -8,7 +8,7 @@ export default function Assets() {
   const [allAssetsData, setAllAssetsData] = useState([]);
 
   useEffect(() => {
-    const companyId = '633d204450cf920b1b527fe7'; //Obter de um context 
+    const companyId = '634520bc05727a7eb274cf43'; //Obter de um context 
 
     const allAssets = async () => {
       const data = await getAllAssets(companyId);

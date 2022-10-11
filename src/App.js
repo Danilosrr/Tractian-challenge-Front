@@ -5,6 +5,7 @@ import Overview from "./components/Overview";
 import { MainApp } from "./components/shared/Main";
 import Units from "./components/Units/Units";
 import Assets from "./components/Assets/Assets";
+import Users from "./components/Users/Users";
 
 export default function App() {
 
@@ -18,7 +19,7 @@ export default function App() {
             <Route path="/app/home" element={<Overview></Overview>} />
             <Route path="/app/units" element={<Units></Units>} />
             <Route path="/app/assets" element={<Assets></Assets>} />
-            <Route path="/app/users" element={<></>} />
+            <Route path="/app/users" element={<Users></Users>} />
           </Route>
         </Routes>
       </BrowserRouter>
