@@ -35,6 +35,7 @@ export default function Company() {
       }}
     >
       <Button
+        key={'newCompany'}
         type='dashed'
         onClick={() => { navigate('/new') }}
       >
